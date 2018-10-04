@@ -1,0 +1,44 @@
+﻿<Window x:Class="InstrumentMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InstrumentMonitor"
+        mc:Ignorable="d"
+        Title="Instrument Monitor" Height="500" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1" Grid.Column="1" Height="30"  Width="100" Content="Start" Command="{Binding Path=StartMonitorCommand}"/>
+        <Button Grid.Row="1" Grid.Column="2" Height="30" Width="100" Content="Stop" Command="{Binding Path=StopMonitorCommand}"/>
+        <ListView Margin="10" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" PreviewMouseLeftButtonUp="OnListViewItemSelected" ItemsSource="{Binding CurrentInstrumentItems}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Symbol" Width="110" DisplayMemberBinding="{Binding Symbol}"/>
+                    <GridViewColumn Header="Price"  Width="110" DisplayMemberBinding="{Binding Path=Price, StringFormat=N2}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonUp" Handler="OnListViewItemSelected" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <Button Grid.Row="2" Grid.Column="3" Margin="5,10,97,212" Content="Remove" Command="{Binding Path=RemoveItemCommand}" RenderTransformOrigin="1.468,-6.419"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding Path=ItemToAdd, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Row="3" Grid.Column="2" Margin="5" Content="Add" Command="{Binding Path=AddItemCommand}"/>
+        <TextBlock Grid.Row="3" Grid.Column="3" Margin="0" Text="{Binding Path=ErrorText}"/>
+        
+    </Grid>
+</Window>
